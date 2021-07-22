@@ -1,4 +1,4 @@
-const db = require ("./db/connection");
+const db = require("./db/connection");
 const inquirer = require("require");
 const path = require("path");
 const util = require("util");
