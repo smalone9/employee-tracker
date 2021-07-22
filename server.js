@@ -90,5 +90,5 @@ db.connect((err) => {
 console.log("You are connected to the Database!");
 app.listen(PORT, () => {
     console.log(`You are connected to port ${PORT}`);
-})
+});
 })
