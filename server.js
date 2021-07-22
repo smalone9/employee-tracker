@@ -82,3 +82,13 @@ app.post("/api/employee", ({ body }, res) => {
     });
 });
 // create new employee
+
+// test db and server
+db.connect((err) => {
+
+
+console.log("You are connected to the Database!");
+app.listen(PORT, () => {
+    console.log(`You are connected to port ${PORT}`);
+})
+})
