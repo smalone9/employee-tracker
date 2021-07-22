@@ -1,65 +1,68 @@
 const db = require ("./db/connection");
-const express = require("express");
-const PORT = process.env.PORT || 3001;
-const app = express();
-const checkServer = require("./utils/checkServer");
-const { resourceLimits } = require("worker_threads");
+const inquirer = require("require");
+const path = require("path");
+const util = require("util");
 
-// middleware
-app.use(express.urlencoded({ extended: false}));
-app.use(express.json());
+db.query = util.promisify(db.query);
 
+const userPrompt = async() => {
+    try {
+        const {answer} = await inquirer.prompt({
+            type: "list",
+            message: "What would you like to do?",
+            name: "answer",
+            // add more options
+            choices: ["View all employees", "View all roles", "View all Departments", "Update Employee Role", "Quit"]
+        })
+        switch(answer){
+            case "View all employees":
+                getAllEmployees()
+                break;
+            case "View all roles":
+                getAllRoles()
+                break;
+            case "View all Departments":
+                getAllDepartments()
+                break;
+            case "Update Employee Role":
+                updateEmployee()
+                break;
+                // add more options
+            default:
+                process.exit();
+        }
+    }   catch (error) {
+        
+    }
+}
 // get route to access all employees
-app.get("/api/employee", (req, res) => {
+const getAllEmployees = async() => {
+    try {
     const sql = `SELECT * FROM employee`;
-    db.query(sql, (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json({
-            message: "Welcome to the Employee Tracker",
-            data: rows
-        })
-    })
-});
+    const allEmployees = await db.query(sql);
+    console.table(allEmployees);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
 
-// get route to access one employee
-app.get("/api/employee/:id", (req, res) => {
-    const sql = `SELECT FROM * employee WHERE id = ?`;
-    const params = [req.params.id];
-    db.query(sql, (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
+// create function to update
+const updateEmployee = async() => {
+    try {
+        const allEmployees = await db.query(`UPDATE * FROM employee`);
+        const allRoles = await db.query(`UPDATE * FROM roles`);
+        const employeeChoices = allEmployees.map(employee => {
+            return {
+                name:`${employee.first_name} ${employee.last_name}`,
+                value: `${employee.id}`
         }
-        res.json({
-            message: "Welcome to the Employee Tracker",
-            data: rows
         })
-    })
-});
-
-// delete route to remove employee
-app.delete("/api/employee/:id", (req, res) => {
-    const sql = `DELETE FROM * employee WHERE id = ?`;
-    const params = [req.params.id];
-    db.query(sql, (err, rows) => {
-        if (err) {
-            res.status(404).json({ error: res.message });
-        } else if (!resourceLimits.rowsAffected) {
-            res.json({
-                message: "Incorrect Employee ID"
-            })
-        } else {
-        res.json({
-            message: "Employee Deleted",
-            changes: result.rowsAffected,
-            id: req.params.id
-        });
-    };
-    });
-});
+        userPrompt();
+        } catch (error) {
+           console.log(error); 
+        }
+}
 
 // post route to add employee info.
 app.post("/api/employee", ({ body }, res) => {
@@ -82,13 +85,5 @@ app.post("/api/employee", ({ body }, res) => {
     });
 });
 // create new employee
-
-// test db and server
-db.connect((err) => {
-
-
-console.log("You are connected to the Database!");
-app.listen(PORT, () => {
-    console.log(`You are connected to port ${PORT}`);
-});
-})
+// call first function
+userPrompt()
