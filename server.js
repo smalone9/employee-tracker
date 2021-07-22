@@ -81,6 +81,42 @@ const getAllEmployees = async() => {
     }
 };
 
+// add a department
+const addDepartment = async() => {
+    try {
+    const sql = `INSERT INTO department`;
+    const addDepartment = await db.query(sql);
+    console.table(addDepartment);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
+
+// add a role
+const addRole = async() => {
+    try {
+    const sql = `INSERT INTO role`;
+    const addRole = await db.query(sql);
+    console.table(addRole);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
+
+// add an employee
+const addEmployee = async() => {
+    try {
+    const sql = `INSERT INTO employee`;
+    const addEmployee = await db.query(sql);
+    console.table(addEmployee);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
+
 // create function to update
 const updateEmployee = async() => {
     try {
