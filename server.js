@@ -5,20 +5,21 @@ const util = require("util");
 
 db.query = util.promisify(db.query);
 
+// async await functions to prompt user
 const userPrompt = async() => {
     try {
         const {answer} = await inquirer.prompt({
             type: "list",
             message: "What would you like to do?",
             name: "answer",
-            // add more options
-            choices: ["View all employees", "View all roles", "View all Departments", "Update Employee Role", "Quit"]
+            // user options
+            choices: ["View all Employees", "View all Roles", "View all Departments", "Update Employee Role", "Add a Department", "Add a Role", "Add an Employee", "Quit"]
         })
         switch(answer){
-            case "View all employees":
+            case "View all Employees":
                 getAllEmployees()
                 break;
-            case "View all roles":
+            case "View all Roles":
                 getAllRoles()
                 break;
             case "View all Departments":
@@ -27,7 +28,15 @@ const userPrompt = async() => {
             case "Update Employee Role":
                 updateEmployee()
                 break;
-                // add more options
+            case "Add a Department":
+                    updateEmployee()
+                    break;
+            case "Add a Role":
+                    updateEmployee()
+                    break;
+            case "Add an Employee":
+                        updateEmployee()
+                    break;    
             default:
                 process.exit();
         }
