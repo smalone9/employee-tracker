@@ -13,38 +13,63 @@ const userPrompt = async() => {
             message: "What would you like to do?",
             name: "answer",
             // user options
-            choices: ["View all Employees", "View all Roles", "View all Departments", "Update Employee Role", "Add a Department", "Add a Role", "Add an Employee", "Quit"]
+            choices: ["View all Departments", "View all Roles", "View all Employees", "Add a Department", "Add a Role", "Add an Employee", "Update Employee Role", "Quit"]
         })
         switch(answer){
-            case "View all Employees":
-                getAllEmployees()
+            case "View all Departments":
+                getAllDepartments()
                 break;
             case "View all Roles":
                 getAllRoles()
                 break;
-            case "View all Departments":
-                getAllDepartments()
+            case "View all Employees":
+                getAllEmployees()
+                break;
+            case "Add a Department":
+                addDepartment()
+                break;
+            case "Add a Role":
+                addRole()
+                break;
+            case "Add an Employee":
+                AddEmployee()
                 break;
             case "Update Employee Role":
                 updateEmployee()
-                break;
-            case "Add a Department":
-                    updateEmployee()
-                    break;
-            case "Add a Role":
-                    updateEmployee()
-                    break;
-            case "Add an Employee":
-                        updateEmployee()
-                    break;    
+                break;    
             default:
                 process.exit();
         }
     }   catch (error) {
         
     }
-}
-// get route to access all employees
+};
+
+// access all departments
+const getAllDepartments = async() => {
+    try {
+    const sql = `SELECT * FROM department`;
+    const allDepartments = await db.query(sql);
+    console.table(allDepartments);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
+
+// access all roles
+const getAllRoles = async() => {
+    try {
+    const sql = `SELECT * FROM role`;
+    const allRoles = await db.query(sql);
+    console.table(allRoles);
+    userPrompt();
+    } catch (error) {
+       console.log(error); 
+    }
+};
+
+// access all employees
 const getAllEmployees = async() => {
     try {
     const sql = `SELECT * FROM employee`;
