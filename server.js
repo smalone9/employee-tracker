@@ -1,5 +1,5 @@
 const db = require("./db/connection");
-const inquirer = require("require");
+const inquirer = require("inquirer");
 const path = require("path");
 const util = require("util");
 
