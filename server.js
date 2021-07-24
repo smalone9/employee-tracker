@@ -1,6 +1,6 @@
 const db = require("./db/connection");
 const inquirer = require("inquirer");
-const path = require("path");
+// const path = require("path");
 const util = require("util");
 
 db.query = util.promisify(db.query);
@@ -128,6 +128,8 @@ const updateEmployee = async() => {
                 value: `${employee.id}`
         }
         })
+        console.table(allRoles);
+        console.table(employeeChoices);
         userPrompt();
         } catch (error) {
            console.log(error); 
