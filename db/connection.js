@@ -12,6 +12,6 @@ connection.connect(function(err){
     if(err) throw err;
 });
 
-connection.connect();
+// connection.connect();
 // export
 module.exports = connection

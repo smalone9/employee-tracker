@@ -60,7 +60,7 @@ const getAllDepartments = async() => {
 // access all roles
 const getAllRoles = async() => {
     try {
-    const sql = `SELECT * FROM role`;
+    const sql = `SELECT role.title, role.salary, department.name FROM role LEFT JOIN department ON role.department_id = department.id`;
     const allRoles = await db.query(sql);
     console.table(allRoles);
     userPrompt();
@@ -84,7 +84,7 @@ const getAllEmployees = async() => {
 // add a department
 const addDepartment = async() => {
     try {
-    const sql = `INSERT INTO department`;
+    const sql = `INSERT INTO department SET ?`;
     const addDepartment = await db.query(sql);
     console.table(addDepartment);
     userPrompt();
