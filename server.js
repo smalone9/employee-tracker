@@ -48,7 +48,7 @@ const userPrompt = async() => {
 // access all departments
 const getAllDepartments = async() => {
     try {
-    const sql = `SELECT * FROM department`;
+    const sql = "SELECT * FROM department";
     const allDepartments = await db.query(sql);
     console.table(allDepartments);
     userPrompt();
@@ -60,7 +60,7 @@ const getAllDepartments = async() => {
 // access all roles
 const getAllRoles = async() => {
     try {
-    const sql = `SELECT * FROM role`;
+    const sql = "SELECT * FROM role";
     const allRoles = await db.query(sql);
     console.table(allRoles);
     userPrompt();
@@ -72,7 +72,7 @@ const getAllRoles = async() => {
 // access all employees
 const getAllEmployees = async() => {
     try {
-    const sql = `SELECT * FROM employee`;
+    const sql = "SELECT * FROM employee";
     const allEmployees = await db.query(sql);
     console.table(allEmployees);
     userPrompt();
@@ -84,9 +84,22 @@ const getAllEmployees = async() => {
 // add a department
 const addDepartment = async() => {
     try {
-        const sql = `INSERT INTO department`;
-        const addDepartment = await db.query(sql);
-        console.table(addDepartment);
+        const sql = "SELECT * FROM department";
+        const allDepartments = await db.query(sql);
+        console.log(allDepartments);
+        let response = await inquirer.prompt([
+                {
+                name:"name",
+                type: "input",
+                message: "Which department would you like to add?"
+                }])
+                console.log(Object.values(response));
+                console.log(response.name);
+        const addDepartment = `INSERT INTO department (departmentName) VALUES ('${response.name}')`;
+        console.log(addDepartment);
+        db.query(addDepartment);
+        console.log("end of function");
+        // console.table(addDepartment);
         userPrompt();
         } catch (error) {
            console.log(error); 
@@ -102,19 +115,32 @@ const addDepartment = async() => {
 // add a role
 const addRole = async() => {
     try {
-    const sql = `INSERT INTO role`;
-    const addRole = await db.query(sql);
-    console.table(addRole);
-    userPrompt();
-    } catch (error) {
-       console.log(error); 
-    }
-};
+        const sql = "SELECT * FROM role";
+        const allRoles = await db.query(sql);
+        console.log(allRoles);
+        let response = await inquirer.prompt([
+                {
+                name:"name",
+                type: "input",
+                message: "Which department would you like to add?"
+                }])
+                console.log(Object.values(response));
+                console.log(response.name);
+        const addDepartment = `INSERT INTO department (departmentName) VALUES ('${response.name}')`;
+        console.log(addDepartment);
+        db.query(addDepartment);
+        console.log("end of function");
+        // console.table(addDepartment);
+        userPrompt();
+        } catch (error) {
+           console.log(error); 
+        }
+    };
 
 // add an employee
 const addEmployee = async() => {
     try {
-    const sql = `INSERT INTO employee`;
+    const sql = "INSERT INTO employee";
     const addEmployee = await db.query(sql);
     console.table(addEmployee);
     userPrompt();
@@ -126,8 +152,8 @@ const addEmployee = async() => {
 // create function to update
 const updateEmployee = async() => {
     try {
-        const allEmployees = await db.query(`UPDATE * FROM employee`);
-        const allRoles = await db.query(`UPDATE * FROM roles`);
+        const allEmployees = await db.query("UPDATE FROM employee");
+        const allRoles = await db.query("UPDATE * FROM roles");
         const employeeChoices = allEmployees.map(employee => {
             return {
                 name:`${employee.first_name} ${employee.last_name}`,
