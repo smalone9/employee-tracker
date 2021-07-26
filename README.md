@@ -9,7 +9,7 @@ SO THAT I can organize and plan my business
 ## Vioeo Walkthrough
 [Check it Out](https://drive.google.com/file/d/107mZipNzDlHY4WhD4Cv9541oLwI6zg29/view?usp=sharing)
 
-![Image of Note Taker](./screenshot.PNG)
+![Image of Note Taker](screenshot.PNG)
 
 GIVEN a command-line application that accepts user input
 WHEN I start the application
