@@ -113,12 +113,6 @@ const addDepartment = async () => {
     console.log(error);
   }
 };
-// const sql = `INSERT INTO department`;
-// inquirer.prompt([
-//     {
-//     name:"name",
-//     type: "input",
-//     message: "Which department would you like to add?"
 
 // add a role
 const addRole = async () => {
@@ -148,8 +142,8 @@ const addRole = async () => {
     const addRole = `INSERT INTO role (title, salary, department_id) VALUES ('${response.name}')`;
     console.log(addRole);
     db.query(addRole);
+    console.table(addRole);
     console.log("end of function");
-    // console.table(addDepartment);
     userPrompt();
   } catch (error) {
     console.log(error);
@@ -159,31 +153,37 @@ const addRole = async () => {
 // add an employee
 const addEmployee = async () => {
     try {
-        const sql = "SELECT * FROM role";
-        const allRoles = await db.query(sql);
-        console.log(allRoles);
+        const sql = "SELECT * FROM employee";
+        const allEmployees = await db.query(sql);
+        console.log(allEmployees);
         let response = await inquirer.prompt([
           {
-            name: "title",
+            name: "first_name",
             type: "input",
-            message: "Which role would you like to add?",
+            message: "What is the first name?",
           },
           {
-            name: "salary",
+            name: "last_name",
             type: "input",
-            message: "What is the salary?",
+            message: "What is the last name?",
           },
           {
-            name: "department_id",
+            name: "manager_id",
             type: "number",
-            message: "What is the department id?", 
+            message: "What is the manager id?",
+          },
+          {
+            name: "role_id",
+            type: "number",
+            message: "What is the role id?", 
           },
         ]);
         console.log(Object.values(response));
         console.log(response);
-        const addRole = `INSERT INTO role (title, salary, department_id) VALUES ('${response}')`;
-        console.log(addRole);
-        db.query(addRole);
+        const addEmployee = `INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ('${response}')`;
+        console.log(addEmployee);
+        db.query(addEmployee);
+        console.table(addEmployee);
         console.log("end of function");
         userPrompt();
       } catch (error) {
@@ -194,7 +194,7 @@ const addEmployee = async () => {
 // create function to update
 const updateEmployee = async () => {
   try {
-    const allEmployees = await db.query("UPDATE FROM employee");
+    const allEmployees = await db.query("UPDATE * FROM employee");
     const allRoles = await db.query("UPDATE * FROM roles");
     const employeeChoices = allEmployees.map((employee) => {
       return {
